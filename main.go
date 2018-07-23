@@ -12,12 +12,14 @@ func main() {
 		help()
 	}
 
-	if len(os.Args) == 2 {
+	if len(os.Args) >= 2 {
 		path, err := exec.LookPath(fmt.Sprintf("git-hook-%s", os.Args[1]))
 		if err != nil {
+			fmt.Printf("error: %s\n", err)
 			result = 1
 		} else {
 			cmd := exec.Command(path)
+			cmd.Args = os.Args[1:]
 			cmd.Stderr = os.Stderr
 			cmd.Stdout = os.Stdout
 			cmd.Stdin = os.Stdin
@@ -31,12 +33,6 @@ func main() {
 			}
 		}
 	}
-
-	if len(os.Args) > 2 {
-		fmt.Fprintln(os.Stderr, "")
-		result = 1
-	}
-
 	os.Exit(result)
 }
 
