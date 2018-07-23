@@ -1,7 +1,7 @@
 project_name: git-commit
 builds:
   - binary: git-hook-commit
-    main: ./cmd/main.go
+    main: main.go
     goos:
       - windows
       - linux
